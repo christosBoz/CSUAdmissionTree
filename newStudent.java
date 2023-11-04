@@ -1,12 +1,14 @@
 
-public class newStudent {
-	
+
+public class newStudent{
+	public String name;
 	private double studentSAT;
 	private double studentGPA;
 	private boolean hasDiploma;
 	private int points;
 	
-	public newStudent(double newSAT, double newGPA, boolean diplomaCheck) {
+	public newStudent(String name, double newSAT, double newGPA, boolean diplomaCheck) {
+		this.name = name;
 		this.studentSAT = newSAT;
 		this.studentGPA = newGPA;
 		this.hasDiploma = diplomaCheck;
@@ -42,4 +44,5 @@ public class newStudent {
 	public int getPoints() {
 		return this.points;
 	}
+	
 }

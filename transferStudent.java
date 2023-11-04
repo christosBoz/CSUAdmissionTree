@@ -1,11 +1,12 @@
 
 public class transferStudent {
-	
+	public String name;
 	private double studentGPA;
 	private int studentUnits;
 	private int points;
 	
-	public transferStudent(double newGPA, int newUnits) {
+	public transferStudent(String name, double newGPA, int newUnits) {
+		this.name = name;
 		this.studentGPA = newGPA;
 		this.studentUnits = newUnits;
 	}

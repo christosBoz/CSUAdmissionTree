@@ -30,17 +30,30 @@ public TreeNode(int newUnits, String newName, int pointValue) {
 }
 
 public TreeNode(String name) {
+this.name = name;
 this.children = new ArrayList<>();
 }
+
+
+
 public void addChild(TreeNode child) {
 children.add(child);
 }
 public String getName() {
-return name;
+return this.name;
 }
-public double getGPA() {
+public double getChildGPA() {
 return childGPA;
 }
+
+public double getChildSAT(){
+	return childSAT;
+}
+
+public double getChildUnits(){
+	return units;
+}
+
 public List<TreeNode> getChildren() {
 return children;
 }
