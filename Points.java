@@ -1,54 +1,143 @@
 import java.util.*;
+
 public class Points{
+    private static List<Object> studentsAndTransfers = new ArrayList<>();
+    private static TreeNode root = createTree();
     public static void main(String[] args) {
-        TreeNode root = createTree();
-        List<Object> studentsAndTransfers = new ArrayList<>();
+        //TreeNode root = createTree();
+        //List<Object> studentsAndTransfers = new ArrayList<>();
         
         
 
         // Call to print the tree
-        printTree(root, "");
-
-
-
-        newStudent Jake = new newStudent("Jake", 1100, 3.6, true);
-        newStudent Alex = new newStudent("Alex", 950, 2.3, true);
-        /*newStudent Martin = new newStudent(1100, 3.6, true);
-        newStudent Sam = new newStudent(1100, 3.6, true);
-        newStudent Luca = new newStudent(1100, 3.6, true);
-        */
-        transferStudent Paul = new transferStudent("Paul", 2.2, 55);
-        transferStudent Annie = new transferStudent("Annie", 4.0, 70);
-       /*  transferStudent Zach = new transferStudent(2.2, 55);
-        transferStudent Sarah = new transferStudent(2.2, 55);
-        transferStudent Molly = new transferStudent(2.2, 55);
-        */
-        studentsAndTransfers.add(Jake);
-        studentsAndTransfers.add(Alex);
-        studentsAndTransfers.add(Paul);
-        studentsAndTransfers.add(Annie);
-
-        // Calculate points for each student and transfer
-        calculatePointsStudent(root, Jake);
-        calculatePointsTransfer(root, Paul);
-        calculatePointsStudent(root, Alex);
-        calculatePointsTransfer(root, Annie);
+        //printTree(root, "");
         
-        studentsAndTransfers.sort(new PointsComparator());
 
-        // Print the sorted list
-        for (Object obj : studentsAndTransfers) {
-            if (obj instanceof newStudent) {
-                newStudent student = (newStudent) obj;
-                System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
-            } else if (obj instanceof transferStudent) {
-                transferStudent transfer = (transferStudent) obj;
-                System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
-            }
-        }
+        getInfo();
+
+
+
+    //     newStudent Jake = new newStudent("Jake", 1100, 3.6, true);
+    //     newStudent Alex = new newStudent("Alex", 950, 2.3, true);
+    //     /*newStudent Martin = new newStudent(1100, 3.6, true);
+    //     newStudent Sam = new newStudent(1100, 3.6, true);
+    //     newStudent Luca = new newStudent(1100, 3.6, true);
+    //     */
+    //     transferStudent Paul = new transferStudent("Paul", 2.2, 55);
+    //     transferStudent Annie = new transferStudent("Annie", 4.0, 70);
+    //    /*  transferStudent Zach = new transferStudent(2.2, 55);
+    //     transferStudent Sarah = new transferStudent(2.2, 55);
+    //     transferStudent Molly = new transferStudent(2.2, 55);
+    //     */
+    //     studentsAndTransfers.add(Jake);
+    //     studentsAndTransfers.add(Alex);
+    //     studentsAndTransfers.add(Paul);
+    //     studentsAndTransfers.add(Annie);
+
+    //     // Calculate points for each student and transfer
+    //     calculatePointsStudent(root, Jake);
+    //     calculatePointsTransfer(root, Paul);
+    //     calculatePointsStudent(root, Alex);
+    //     calculatePointsTransfer(root, Annie);
+        
+    //     studentsAndTransfers.sort(new PointsComparator());
+
+    //     // Print the sorted list
+    //     for (Object obj : studentsAndTransfers) {
+    //         if (obj instanceof newStudent) {
+    //             newStudent student = (newStudent) obj;
+    //             System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
+    //         } else if (obj instanceof transferStudent) {
+    //             transferStudent transfer = (transferStudent) obj;
+    //             System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
+    //         }
+    //     }
 
     
     }
+
+    public static void getInfo(){
+        Scanner in = new Scanner(System.in);
+        boolean continueLoop = true;
+        Boolean diploma = true;
+        while(continueLoop == true){
+
+            System.out.println("Welcome to CSU Admissions! Are you a new Student or Transfer");
+            String student_info = in.nextLine();
+
+            if(student_info.equalsIgnoreCase("student")){
+                System.out.println("Do you have a diploma? Enter Y/N");
+                String checkDiploma = in.nextLine();
+                if(checkDiploma.equalsIgnoreCase("N")){
+                    System.out.println("Sorry you are not eligible");
+                    System.out.println("Press N to add a new applicant , or type any other character to exit ");
+                    String response = in.nextLine();
+                    if(response.equalsIgnoreCase("N")){
+                        continue;
+                    }
+                    else{
+                        break;
+                    }
+                           
+                }
+
+                System.out.println("Enter your first name: ");
+                String student_name = in.nextLine();
+                System.out.println("Enter your SAT score: ");
+                double score = in.nextDouble();
+                System.out.println("Enter your GPA: ");
+                double GPA = in.nextDouble();
+                newStudent student = new newStudent(student_name, score, GPA, diploma);
+                studentsAndTransfers.add(student);
+                calculatePointsStudent(root, student);
+                in.nextLine();
+                System.out.println("Press N to add a new applicant , or type any other character to continue ");
+                String response = in.nextLine();
+                if(!response.equalsIgnoreCase("n")){
+                    continueLoop = false;
+                }
+                
+                //continue;
+            }
+
+            if(student_info.equalsIgnoreCase("transfer")){
+
+                System.out.println("Enter your first name: ");
+                String student_name = in.nextLine();
+                System.out.println("Enter your GPA: ");
+                double GPA = in.nextDouble();
+                System.out.println("Enter the number of Units you are transfering with: ");
+                int unit_count = in.nextInt();
+                transferStudent transfer = new transferStudent(student_name, GPA, unit_count);
+                studentsAndTransfers.add(transfer);
+                calculatePointsTransfer(root, transfer);
+                in.nextLine();
+                System.out.println("Enter N to add a new applicant, or type any other charachter to continue: ");
+                String response = in.nextLine();
+                if(!response.equalsIgnoreCase("N")){
+                    continueLoop = false;
+                }
+            }         
+    }
+    //System.out.println(studentsAndTransfers);
+
+    
+    studentsAndTransfers.sort(new PointsComparator()); 
+
+     for (Object obj : studentsAndTransfers) {
+             if (obj instanceof newStudent) {
+                 newStudent student = (newStudent) obj;
+                 System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
+             } else if (obj instanceof transferStudent) {
+                 transferStudent transfer = (transferStudent) obj;
+                 System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
+             }
+         }
+  
+
+
+    }
+
 
   
 
