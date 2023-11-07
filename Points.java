@@ -9,6 +9,9 @@ public class Points{
 
     
         //printTree(root, "");
+        //newStudent test = new newStudent("Matt", 1200, 2.5, true);
+        //calculatePointsStudent(root, test);
+
         
 
         getInfo();
@@ -148,8 +151,7 @@ public class Points{
             TreeNode holder = node;
             
             
-            
-            // Calculate points for the node based on your criteria (you can customize this part)
+    
             if (node.getName().equals("Student")) {
                 points += calculatePointsForSAT(node, student);
                 node = holder.getChild(1);
@@ -171,8 +173,7 @@ public class Points{
             TreeNode holder = node;
             
             
-            
-            // Calculate points for the node based on your criteria (you can customize this part)
+
             if (node.getName().equals("Transfer")) {
                 points += calculatePointsForGPA(node, Transfer);
                 node = holder.getChild(1);
@@ -189,7 +190,7 @@ public class Points{
 
     public static int calculatePointsForSAT(TreeNode node, newStudent student) {
         node = node.getChild(0);
-        // Customize the calculation based on your criteria
+
         int points = 0;
         for(TreeNode childNode : node.getChildren()){
             if (student.getSAT() <= childNode.getChildSAT()) {
@@ -202,7 +203,7 @@ public class Points{
     }
 
     public static int calculatePointsForGPA(TreeNode node, newStudent student) {
-        // Customize the calculation based on your criteria
+
         int points = 0;
         for(TreeNode childNode : node.getChildren()){
             if (student.getGPA() <= childNode.getChildGPA()) {
@@ -214,7 +215,7 @@ public class Points{
     }
 
     public static int calculatePointsForGPA(TreeNode node, transferStudent transfer) {
-        // Customize the calculation based on your criteria
+
         node = node.getChild(0);
         int points = 0;
         for(TreeNode childNode : node.getChildren()){
@@ -227,9 +228,9 @@ public class Points{
     }
 
     public static int calculatePointsForUnits(TreeNode node, transferStudent transfer) {
-        // Customize the calculation based on your criteria
+   
         int points = 0;
-        // Example criteria
+
         for(TreeNode childNode : node.getChildren()){
             if (transfer.getUnits() <= childNode.getChildUnits()) {
             points += childNode.getPoints();
