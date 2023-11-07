@@ -8,7 +8,7 @@ public class Points{
     public static void main(String[] args) {
 
     
-        printTree(root, "");
+        //printTree(root, "");
         
 
         getInfo();
