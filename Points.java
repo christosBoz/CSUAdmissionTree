@@ -8,7 +8,7 @@ public class Points{
     public static void main(String[] args) {
 
     
-        printTree(root, "");
+        //printTree(root, "");
         //newStudent test = new newStudent("Matt", 1200, 2.5, true);
         //calculatePointsStudent(root, test);
 
