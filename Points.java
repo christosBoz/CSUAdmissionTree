@@ -3,55 +3,27 @@ import java.util.*;
 public class Points{
     private static List<Object> studentsAndTransfers = new ArrayList<>();
     private static TreeNode root = createTree();
-    public static void main(String[] args) {
-        //TreeNode root = createTree();
-        //List<Object> studentsAndTransfers = new ArrayList<>();
-        
-        
 
-        // Call to print the tree
-        //printTree(root, "");
+
+    public static void main(String[] args) {
+
+    
+        printTree(root, "");
         
 
         getInfo();
+        studentsAndTransfers.sort(new PointsComparator()); 
 
-
-
-    //     newStudent Jake = new newStudent("Jake", 1100, 3.6, true);
-    //     newStudent Alex = new newStudent("Alex", 950, 2.3, true);
-    //     /*newStudent Martin = new newStudent(1100, 3.6, true);
-    //     newStudent Sam = new newStudent(1100, 3.6, true);
-    //     newStudent Luca = new newStudent(1100, 3.6, true);
-    //     */
-    //     transferStudent Paul = new transferStudent("Paul", 2.2, 55);
-    //     transferStudent Annie = new transferStudent("Annie", 4.0, 70);
-    //    /*  transferStudent Zach = new transferStudent(2.2, 55);
-    //     transferStudent Sarah = new transferStudent(2.2, 55);
-    //     transferStudent Molly = new transferStudent(2.2, 55);
-    //     */
-    //     studentsAndTransfers.add(Jake);
-    //     studentsAndTransfers.add(Alex);
-    //     studentsAndTransfers.add(Paul);
-    //     studentsAndTransfers.add(Annie);
-
-    //     // Calculate points for each student and transfer
-    //     calculatePointsStudent(root, Jake);
-    //     calculatePointsTransfer(root, Paul);
-    //     calculatePointsStudent(root, Alex);
-    //     calculatePointsTransfer(root, Annie);
+        for (Object obj : studentsAndTransfers) {
+             if (obj instanceof newStudent) {
+                 newStudent student = (newStudent) obj;
+                 System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
+             } else if (obj instanceof transferStudent) {
+                 transferStudent transfer = (transferStudent) obj;
+                 System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
+             }
+         }
         
-    //     studentsAndTransfers.sort(new PointsComparator());
-
-    //     // Print the sorted list
-    //     for (Object obj : studentsAndTransfers) {
-    //         if (obj instanceof newStudent) {
-    //             newStudent student = (newStudent) obj;
-    //             System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
-    //         } else if (obj instanceof transferStudent) {
-    //             transferStudent transfer = (transferStudent) obj;
-    //             System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
-    //         }
-    //     }
 
     
     }
@@ -96,8 +68,6 @@ public class Points{
                 if(!response.equalsIgnoreCase("n")){
                     continueLoop = false;
                 }
-                
-                //continue;
             }
 
             if(student_info.equalsIgnoreCase("transfer")){
@@ -119,21 +89,6 @@ public class Points{
                 }
             }         
     }
-    //System.out.println(studentsAndTransfers);
-
-    
-    studentsAndTransfers.sort(new PointsComparator()); 
-
-     for (Object obj : studentsAndTransfers) {
-             if (obj instanceof newStudent) {
-                 newStudent student = (newStudent) obj;
-                 System.out.println("Student: " + student.name + ", Points: " + student.getPoints());
-             } else if (obj instanceof transferStudent) {
-                 transferStudent transfer = (transferStudent) obj;
-                 System.out.println("Transfer: " + transfer.name + ", Points: " + transfer.getPoints());
-             }
-         }
-  
 
 
     }
@@ -147,21 +102,21 @@ public class Points{
             TreeNode transfer = new TreeNode("Transfer");
         
             TreeNode sat = new TreeNode("SAT");
-            TreeNode highSATRange = new TreeNode("high, 1400+", 1400, 5);
-            TreeNode avgSATRange = new TreeNode("average, 1050+", 1050, 4);
-            TreeNode lowSATRange = new TreeNode("low, -1050", 1049, 3);
+            TreeNode highSATRange = new TreeNode("high, 1300+", 1800, 5);
+            TreeNode avgSATRange = new TreeNode("average, <=1200", 1200, 4);
+            TreeNode lowSATRange = new TreeNode("low, <=1049", 1049, 3);
         
             TreeNode gpa = new TreeNode("GPA");
-            TreeNode lowGpaRange = new TreeNode("low/2.5-3.0", 2.5, 3);
-            TreeNode midGpaRange = new TreeNode("mid/3.0-3.5", 3.5, 4);
-            TreeNode highGpaRange = new TreeNode("high/3.5-4.0", 4.0, 5);
+            TreeNode lowGpaRange = new TreeNode("low/0-2.5", 2.5, 3);
+            TreeNode midGpaRange = new TreeNode("mid/2.6-3.5", 3.5, 4);
+            TreeNode highGpaRange = new TreeNode("high/3.6-4.0", 4.0, 5);
         
             TreeNode units = new TreeNode("Units");
             TreeNode highUnitPercentage = new TreeNode(80, "<=80", 5);
             TreeNode midUnitPercentage = new TreeNode(60, "<=60", 4);
             TreeNode lowUnitPercentage = new TreeNode(40, "<=40", 3);
         
-            // Establish parent-child relationships
+            
             root.addChild(student);
             root.addChild(transfer);
         
@@ -183,7 +138,7 @@ public class Points{
             units.addChild(midUnitPercentage);
             units.addChild(lowUnitPercentage);
         
-            return root; // Return the root of the tree
+            return root; 
         }
 
     public static void calculatePointsStudent(TreeNode node, newStudent student) {
@@ -198,7 +153,10 @@ public class Points{
             if (node.getName().equals("Student")) {
                 points += calculatePointsForSAT(node, student);
                 node = holder.getChild(1);
-            }if (node.getName().equals("GPA")) {
+
+            }
+
+            if (node.getName().equals("GPA")) {
                 points += calculatePointsForGPA(node, student);
             } 
             
@@ -218,7 +176,9 @@ public class Points{
             if (node.getName().equals("Transfer")) {
                 points += calculatePointsForGPA(node, Transfer);
                 node = holder.getChild(1);
-            }if (node.getName().equals("Units")) {
+            }
+            
+            if (node.getName().equals("Units")) {
                 points += calculatePointsForUnits(node, Transfer);
             } 
             
